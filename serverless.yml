@@ -1,0 +1,62 @@
+service: serverless-api
+
+variablesResolutionMode: 20210326
+
+custom:
+  stage: ${sls:stage}
+  settings:
+    dev:
+      STAGE: ${self:custom.stage}
+      NODE_ENV: "develop"
+      MONGODB_URL: ${ssm:mongodb-url}
+    stg:
+      STAGE: ${self:custom.stage}
+      NODE_ENV: "staging"
+      MONGODB_URL: ${ssm:mongodb-url}
+    prod:
+      STAGE: ${self:custom.stage}
+      NODE_ENV: "production"
+      MONGODB_URL: ${ssm:mongodb-url}
+
+plugins:
+  - serverless-plugin-tracing
+  - serverless-offline
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: nodejs18.x
+  environment:
+    STAGE: ${self:custom.stage}
+    # ACCESS_KEY_ID: ${ssm:ACCESS_KEY_ID}
+    # SECRET_ACCESS_KEY: ${ssm:SECRET_ACCESS_KEY}
+    # TYPEFORM_BEARER_TOKEN: ${ssm:TYPEFORM_BEARER_TOKEN}
+    REGION: ${self:provider.region}
+    NODE_ENV: ${self:custom.settings.${self:custom.stage}.NODE_ENV}
+    MONGODB_URL: ${self:custom.settings.${self:custom.stage}.MONGODB_URL}
+    DYNAMODB_USERS_TABLE_NAME: ${self:custom.stage}-${self:service}-users-table
+    DYNAMODB_ORGANIZATIONS_TABLE_NAME: ${self:custom.stage}-${self:service}-organizations-table
+    DYNAMODB_TYPEFORM_FORM_TABLE_NAME: ${self:custom.stage}-${self:service}-typeform-form-table
+    DYNAMODB_TYPEFORM_FORM_DATA_TABLE_NAME: ${self:custom.stage}-${self:service}-typeform-form-data-table
+    DYNAMODB_TYPEFORM_FORM_RESPONSE_TABLE_NAME: ${self:custom.stage}-${self:service}-typeform-response-table
+    DYNAMODB_TYPEFORM_WORKSPACE_TABLE_NAME: ${self:custom.stage}-${self:service}-typeform-workspace-table
+    DYNAMODB_TYPEFORM_FORM_BY_WORKSPACE_TABLE_NAME: ${self:custom.stage}-${self:service}-typeform-form-by-workspace-table
+    DYNAMODB_TEAMSAPP_WORKSPACE_TABLE_NAME: ${self:custom.stage}-${self:service}-teamsapp-workspace-table
+    DYNAMODB_TEAMSAPP_CALENDER_EVENTS_TABLE_NAME: ${self:custom.stage}-${self:service}-teamsapp-calender-events-table
+
+  lambdaHashingVersion: 20201221
+
+  iam:
+    role: ${file(./serverless-yml/iam-role-statement.yml)}
+
+functions: ${file(./serverless-yml/functions.yml)}
+
+resources:
+  - ${file(./serverless-yml/resources/dynamodb-organizations-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-typeform-form-data-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-typeform-response-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-typeform-form-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-typeform-workspace-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-typeform-form-by-workspace-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-teamsapp-workspace-table.yml)}
+  - ${file(./serverless-yml/resources/dynamodb-teamsapp-calender-events-table.yml)}

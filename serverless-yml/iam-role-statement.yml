@@ -1,0 +1,36 @@
+statements:
+  - Effect: "Allow"
+    Action:
+      - "xray:PutTraceSegments"
+      - "xray:PutTelemetryRecords"
+      - ssm:GetParameters
+    Resource:
+      - "*"
+  - Effect: Allow
+    Action:
+      - dynamodb:*
+    Resource:
+      - Fn::GetAtt:
+          - OrganizationTable
+          - Arn
+      - Fn::GetAtt:
+          - TypeFormFormDataTable
+          - Arn
+      - Fn::GetAtt:
+          - TypeFormResponseTable
+          - Arn
+      - Fn::GetAtt:
+          - TypeFormFormTable
+          - Arn
+      - Fn::GetAtt:
+          - TypeFormWorkspaceTable
+          - Arn
+      - Fn::GetAtt:
+          - TypeFormFormByWorkspaceTable
+          - Arn
+      - Fn::GetAtt:
+          - TeamsAppWorkspaceTable
+          - Arn
+      - Fn::GetAtt:
+          - TeamsAppCalenderEventsTable
+          - Arn

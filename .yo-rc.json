@@ -1,0 +1,19 @@
+{
+  "generator-astro-sls": {
+    "name": "serverless-api",
+    "apibase": "handler",
+    "apiversion": "v1",
+    "version": "1.0.0",
+    "description": "Serverless api for migrating typeform data to dynamodb and AWS S3",
+    "author": "Md Rezaul Karim",
+    "src": "src",
+    "last_endpoint": "typeform",
+    "last_apidesc": "Migrate all azure blob storage data to s3",
+    "last_method": "get",
+    "last_handlerType": "true",
+    "last_handlerrequire": "false",
+    "last_service": "blobstorage",
+    "last_middleware": "authorize",
+    "last_util": "s3"
+  }
+}

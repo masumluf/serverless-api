@@ -1,0 +1,92 @@
+addOrganization:
+  handler: src/index.addOrganization
+  tracing: true
+  events:
+    - http:
+        method: post
+        cors:
+          origin: "*" # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+        path: /v1/organizations
+
+getOrganizations:
+  handler: src/index.getOrganizations
+  tracing: true
+  events:
+    - http:
+        method: get
+        cors:
+          origin: "*" # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+        path: /v1/organizations
+
+updateOrganization:
+  handler: src/index.updateOrganization
+  tracing: true
+  events:
+    - http:
+        method: put
+        cors:
+          origin: "*" # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+        path: /v1/organizations/{organizationId}
+
+getOrganization:
+  handler: src/index.getOrganization
+  tracing: true
+  events:
+    - http:
+        method: get
+        cors:
+          origin: "*" # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+        path: /v1/organizations/{organizationId}
+
+typeform:
+  handler: src/index.typeForm
+  timeout: 480
+  tracing: true
+  events:
+   - http:
+      method: get
+      path: /v1/typeform
+   - schedule: cron(0 9 * * ? *)
+   - schedule: cron(0 18 * * ? *)
+dataMigrations:
+  handler: src/index.migration
+  timeout: 20
+  tracing: true
+  events:
+   - http:
+      method: get
+      path: /v1/migrations
+   - schedule: cron(0 9 * * ? *)
+   - schedule: cron(0 18 * * ? *)      
