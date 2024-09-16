@@ -1,6 +1,6 @@
-# -api
+# serverless-api
 
-Serverless api for (remote team builder)
+Serverless api for
 
 ## Requirements
 
@@ -12,42 +12,37 @@ Serverless api for (remote team builder)
 Install dependencies:
 
 ```bash
-npm install
+yarn install
 ```
 
 ## Running Locally
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
 ## Running in Production
 
 ```bash
-npm run deploy
+yarn run deploy
 ```
 
 ## Lint
 
 ```bash
 # lint code with ESLint
-npm run lint
+yarn run lint
 
 # try to fix ESLint errors
-npm run lint:fix
+yarn run lint:fix
 
 # lint and watch for changes
-npm run lint:watch
+yarn run lint:watch
 ```
 
 ## Test
 
 ```bash
-# run all tests with Jest
-npm run test
-
-# run unit tests with coverage
-npm run test:unit
 
 # run integration tests
 npm run test:integration
